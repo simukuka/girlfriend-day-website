@@ -585,153 +585,286 @@ function createSpecialEffect(cardType) {
 
 // Create kiss effect
 function createKissEffect() {
-    for (let i = 0; i < 10; i++) {
+    // Get the clicked card position
+    const card = event.target.closest('.fun-card');
+    const rect = card.getBoundingClientRect();
+    const startX = rect.left + rect.width / 2;
+    const startY = rect.top + rect.height / 2;
+    
+    for (let i = 0; i < 15; i++) {
         setTimeout(() => {
             const kiss = document.createElement('div');
             kiss.innerHTML = '💋';
             kiss.style.position = 'fixed';
-            kiss.style.left = Math.random() * window.innerWidth + 'px';
-            kiss.style.top = Math.random() * window.innerHeight + 'px';
+            kiss.style.left = startX + 'px';
+            kiss.style.top = startY + 'px';
             kiss.style.fontSize = '2rem';
             kiss.style.pointerEvents = 'none';
             kiss.style.zIndex = '1000';
-            kiss.style.animation = 'kissFloat 3s ease-out forwards';
+            kiss.style.transform = 'translate(-50%, -50%)';
+            
+            // Random direction and distance
+            const angle = (Math.PI * 2 * i) / 15;
+            const distance = 100 + Math.random() * 200;
+            const endX = startX + Math.cos(angle) * distance;
+            const endY = startY + Math.sin(angle) * distance;
             
             document.body.appendChild(kiss);
+            
+            // Animate flying out
+            requestAnimationFrame(() => {
+                kiss.style.transition = 'all 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                kiss.style.left = endX + 'px';
+                kiss.style.top = endY + 'px';
+                kiss.style.opacity = '0';
+                kiss.style.transform = 'translate(-50%, -50%) scale(0.5)';
+            });
             
             setTimeout(() => {
                 if (document.body.contains(kiss)) {
                     document.body.removeChild(kiss);
                 }
-            }, 3000);
-        }, i * 200);
+            }, 1500);
+        }, i * 50);
     }
 }
 
 // Create hug effect
 function createHugEffect() {
-    const hug = document.createElement('div');
-    hug.innerHTML = '🤗';
-    hug.style.position = 'fixed';
-    hug.style.left = '50%';
-    hug.style.top = '50%';
-    hug.style.transform = 'translate(-50%, -50%)';
-    hug.style.fontSize = '5rem';
-    hug.style.pointerEvents = 'none';
-    hug.style.zIndex = '1000';
-    hug.style.animation = 'hugPulse 2s ease-in-out';
+    // Get the clicked card position
+    const card = event.target.closest('.fun-card');
+    const rect = card.getBoundingClientRect();
+    const startX = rect.left + rect.width / 2;
+    const startY = rect.top + rect.height / 2;
     
-    document.body.appendChild(hug);
-    
-    setTimeout(() => {
-        if (document.body.contains(hug)) {
-            document.body.removeChild(hug);
-        }
-    }, 2000);
-}
-
-// Create dance effect
-function createDanceEffect() {
-    const dancers = ['💃', '🕺', '💃', '🕺'];
-    dancers.forEach((dancer, index) => {
+    // Create multiple hugs flying out
+    for (let i = 0; i < 8; i++) {
         setTimeout(() => {
-            const dance = document.createElement('div');
-            dance.innerHTML = dancer;
-            dance.style.position = 'fixed';
-            dance.style.left = (20 + index * 20) + '%';
-            dance.style.top = '50%';
-            dance.style.transform = 'translateY(-50%)';
-            dance.style.fontSize = '3rem';
-            dance.style.pointerEvents = 'none';
-            dance.style.zIndex = '1000';
-            dance.style.animation = 'danceMove 2s ease-in-out';
+            const hug = document.createElement('div');
+            hug.innerHTML = '🤗';
+            hug.style.position = 'fixed';
+            hug.style.left = startX + 'px';
+            hug.style.top = startY + 'px';
+            hug.style.fontSize = '3rem';
+            hug.style.pointerEvents = 'none';
+            hug.style.zIndex = '1000';
+            hug.style.transform = 'translate(-50%, -50%)';
             
-            document.body.appendChild(dance);
+            // Random direction
+            const angle = (Math.PI * 2 * i) / 8;
+            const distance = 150 + Math.random() * 100;
+            const endX = startX + Math.cos(angle) * distance;
+            const endY = startY + Math.sin(angle) * distance;
+            
+            document.body.appendChild(hug);
+            
+            // Animate flying out
+            requestAnimationFrame(() => {
+                hug.style.transition = 'all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                hug.style.left = endX + 'px';
+                hug.style.top = endY + 'px';
+                hug.style.opacity = '0';
+                hug.style.transform = 'translate(-50%, -50%) scale(0.3)';
+            });
             
             setTimeout(() => {
-                if (document.body.contains(dance)) {
-                    document.body.removeChild(dance);
-                }
-            }, 2000);
-        }, index * 300);
-    });
-}
-
-// Create magic effect
-function createMagicEffect() {
-    const magicElements = ['✨', '🌟', '💫', '⭐'];
-    for (let i = 0; i < 20; i++) {
-        setTimeout(() => {
-            const magic = document.createElement('div');
-            magic.innerHTML = magicElements[Math.floor(Math.random() * magicElements.length)];
-            magic.style.position = 'fixed';
-            magic.style.left = Math.random() * window.innerWidth + 'px';
-            magic.style.top = Math.random() * window.innerHeight + 'px';
-            magic.style.fontSize = '1.5rem';
-            magic.style.pointerEvents = 'none';
-            magic.style.zIndex = '1000';
-            magic.style.animation = 'magicSparkle 2s ease-out forwards';
-            
-            document.body.appendChild(magic);
-            
-            setTimeout(() => {
-                if (document.body.contains(magic)) {
-                    document.body.removeChild(magic);
+                if (document.body.contains(hug)) {
+                    document.body.removeChild(hug);
                 }
             }, 2000);
         }, i * 100);
     }
 }
 
+// Create dance effect
+function createDanceEffect() {
+    // Get the clicked card position
+    const card = event.target.closest('.fun-card');
+    const rect = card.getBoundingClientRect();
+    const startX = rect.left + rect.width / 2;
+    const startY = rect.top + rect.height / 2;
+    
+    const dancers = ['💃', '🕺', '💃', '🕺', '💃', '🕺'];
+    
+    dancers.forEach((dancer, index) => {
+        setTimeout(() => {
+            const dance = document.createElement('div');
+            dance.innerHTML = dancer;
+            dance.style.position = 'fixed';
+            dance.style.left = startX + 'px';
+            dance.style.top = startY + 'px';
+            dance.style.fontSize = '2.5rem';
+            dance.style.pointerEvents = 'none';
+            dance.style.zIndex = '1000';
+            dance.style.transform = 'translate(-50%, -50%)';
+            
+            // Random direction and distance
+            const angle = (Math.PI * 2 * index) / dancers.length;
+            const distance = 120 + Math.random() * 150;
+            const endX = startX + Math.cos(angle) * distance;
+            const endY = startY + Math.sin(angle) * distance;
+            
+            document.body.appendChild(dance);
+            
+            // Animate flying out
+            requestAnimationFrame(() => {
+                dance.style.transition = 'all 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                dance.style.left = endX + 'px';
+                dance.style.top = endY + 'px';
+                dance.style.opacity = '0';
+                dance.style.transform = 'translate(-50%, -50%) scale(0.4) rotate(360deg)';
+            });
+            
+            setTimeout(() => {
+                if (document.body.contains(dance)) {
+                    document.body.removeChild(dance);
+                }
+            }, 1800);
+        }, index * 150);
+    });
+}
+
+// Create magic effect
+function createMagicEffect() {
+    // Get the clicked card position
+    const card = event.target.closest('.fun-card');
+    const rect = card.getBoundingClientRect();
+    const startX = rect.left + rect.width / 2;
+    const startY = rect.top + rect.height / 2;
+    
+    const magicElements = ['✨', '🌟', '💫', '⭐', '✨', '🌟'];
+    
+    for (let i = 0; i < 25; i++) {
+        setTimeout(() => {
+            const magic = document.createElement('div');
+            magic.innerHTML = magicElements[Math.floor(Math.random() * magicElements.length)];
+            magic.style.position = 'fixed';
+            magic.style.left = startX + 'px';
+            magic.style.top = startY + 'px';
+            magic.style.fontSize = '1.8rem';
+            magic.style.pointerEvents = 'none';
+            magic.style.zIndex = '1000';
+            magic.style.transform = 'translate(-50%, -50%)';
+            
+            // Random direction and distance
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 80 + Math.random() * 200;
+            const endX = startX + Math.cos(angle) * distance;
+            const endY = startY + Math.sin(angle) * distance;
+            
+            document.body.appendChild(magic);
+            
+            // Animate flying out
+            requestAnimationFrame(() => {
+                magic.style.transition = 'all 2.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                magic.style.left = endX + 'px';
+                magic.style.top = endY + 'px';
+                magic.style.opacity = '0';
+                magic.style.transform = 'translate(-50%, -50%) scale(0.2) rotate(720deg)';
+            });
+            
+            setTimeout(() => {
+                if (document.body.contains(magic)) {
+                    document.body.removeChild(magic);
+                }
+            }, 2200);
+        }, i * 80);
+    }
+}
+
 // Create tickle effect
 function createTickleEffect() {
-    const tickleEmojis = ['😂', '😆', '🤣', '😄'];
-    for (let i = 0; i < 15; i++) {
+    // Get the clicked card position
+    const card = event.target.closest('.fun-card');
+    const rect = card.getBoundingClientRect();
+    const startX = rect.left + rect.width / 2;
+    const startY = rect.top + rect.height / 2;
+    
+    const tickleEmojis = ['😂', '😆', '🤣', '😄', '😅', '😋'];
+    
+    for (let i = 0; i < 18; i++) {
         setTimeout(() => {
             const tickle = document.createElement('div');
             tickle.innerHTML = tickleEmojis[Math.floor(Math.random() * tickleEmojis.length)];
             tickle.style.position = 'fixed';
-            tickle.style.left = Math.random() * window.innerWidth + 'px';
-            tickle.style.top = Math.random() * window.innerHeight + 'px';
-            tickle.style.fontSize = '2rem';
+            tickle.style.left = startX + 'px';
+            tickle.style.top = startY + 'px';
+            tickle.style.fontSize = '2.2rem';
             tickle.style.pointerEvents = 'none';
             tickle.style.zIndex = '1000';
-            tickle.style.animation = 'tickleBounce 2s ease-out forwards';
+            tickle.style.transform = 'translate(-50%, -50%)';
+            
+            // Random direction and distance
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 100 + Math.random() * 180;
+            const endX = startX + Math.cos(angle) * distance;
+            const endY = startY + Math.sin(angle) * distance;
             
             document.body.appendChild(tickle);
+            
+            // Animate flying out
+            requestAnimationFrame(() => {
+                tickle.style.transition = 'all 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                tickle.style.left = endX + 'px';
+                tickle.style.top = endY + 'px';
+                tickle.style.opacity = '0';
+                tickle.style.transform = 'translate(-50%, -50%) scale(0.3)';
+            });
             
             setTimeout(() => {
                 if (document.body.contains(tickle)) {
                     document.body.removeChild(tickle);
                 }
-            }, 2000);
-        }, i * 150);
+            }, 1600);
+        }, i * 100);
     }
 }
 
 // Create compliment effect
 function createComplimentEffect() {
-    const stars = ['⭐', '🌟', '💫', '✨'];
-    for (let i = 0; i < 12; i++) {
+    // Get the clicked card position
+    const card = event.target.closest('.fun-card');
+    const rect = card.getBoundingClientRect();
+    const startX = rect.left + rect.width / 2;
+    const startY = rect.top + rect.height / 2;
+    
+    const stars = ['⭐', '🌟', '💫', '✨', '⭐', '🌟'];
+    
+    for (let i = 0; i < 15; i++) {
         setTimeout(() => {
             const star = document.createElement('div');
             star.innerHTML = stars[Math.floor(Math.random() * stars.length)];
             star.style.position = 'fixed';
-            star.style.left = Math.random() * window.innerWidth + 'px';
-            star.style.top = Math.random() * window.innerHeight + 'px';
-            star.style.fontSize = '1.8rem';
+            star.style.left = startX + 'px';
+            star.style.top = startY + 'px';
+            star.style.fontSize = '2rem';
             star.style.pointerEvents = 'none';
             star.style.zIndex = '1000';
-            star.style.animation = 'starTwinkle 3s ease-out forwards';
+            star.style.transform = 'translate(-50%, -50%)';
+            
+            // Random direction and distance
+            const angle = (Math.PI * 2 * i) / 15;
+            const distance = 120 + Math.random() * 160;
+            const endX = startX + Math.cos(angle) * distance;
+            const endY = startY + Math.sin(angle) * distance;
             
             document.body.appendChild(star);
+            
+            // Animate flying out
+            requestAnimationFrame(() => {
+                star.style.transition = 'all 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                star.style.left = endX + 'px';
+                star.style.top = endY + 'px';
+                star.style.opacity = '0';
+                star.style.transform = 'translate(-50%, -50%) scale(0.2) rotate(360deg)';
+            });
             
             setTimeout(() => {
                 if (document.body.contains(star)) {
                     document.body.removeChild(star);
                 }
-            }, 3000);
-        }, i * 200);
+            }, 2000);
+        }, i * 120);
     }
 }
 
@@ -1763,53 +1896,97 @@ function playWelcomeSound() {
 
 // Create flirt effect
 function createFlirtEffect() {
-    const flirtEmojis = ['😘', '😍', '🥰', '😊', '💋', '💕'];
-    for (let i = 0; i < 12; i++) {
+    // Get the clicked card position
+    const card = event.target.closest('.fun-card');
+    const rect = card.getBoundingClientRect();
+    const startX = rect.left + rect.width / 2;
+    const startY = rect.top + rect.height / 2;
+    
+    const flirtEmojis = ['😘', '😍', '🥰', '😊', '💋', '💕', '😘', '😍'];
+    
+    for (let i = 0; i < 16; i++) {
         setTimeout(() => {
             const flirt = document.createElement('div');
             flirt.innerHTML = flirtEmojis[Math.floor(Math.random() * flirtEmojis.length)];
             flirt.style.position = 'fixed';
-            flirt.style.left = Math.random() * window.innerWidth + 'px';
-            flirt.style.top = Math.random() * window.innerHeight + 'px';
-            flirt.style.fontSize = '1.8rem';
+            flirt.style.left = startX + 'px';
+            flirt.style.top = startY + 'px';
+            flirt.style.fontSize = '2rem';
             flirt.style.pointerEvents = 'none';
             flirt.style.zIndex = '1000';
-            flirt.style.animation = 'flirtFloat 3s ease-out forwards';
+            flirt.style.transform = 'translate(-50%, -50%)';
+            
+            // Random direction and distance
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 110 + Math.random() * 170;
+            const endX = startX + Math.cos(angle) * distance;
+            const endY = startY + Math.sin(angle) * distance;
             
             document.body.appendChild(flirt);
+            
+            // Animate flying out
+            requestAnimationFrame(() => {
+                flirt.style.transition = 'all 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                flirt.style.left = endX + 'px';
+                flirt.style.top = endY + 'px';
+                flirt.style.opacity = '0';
+                flirt.style.transform = 'translate(-50%, -50%) scale(0.3)';
+            });
             
             setTimeout(() => {
                 if (document.body.contains(flirt)) {
                     document.body.removeChild(flirt);
                 }
-            }, 3000);
-        }, i * 200);
+            }, 1800);
+        }, i * 110);
     }
 }
 
 // Create romance effect
 function createRomanceEffect() {
-    const romanceElements = ['🌹', '💕', '💖', '💝', '💕', '🌹'];
-    for (let i = 0; i < 15; i++) {
+    // Get the clicked card position
+    const card = event.target.closest('.fun-card');
+    const rect = card.getBoundingClientRect();
+    const startX = rect.left + rect.width / 2;
+    const startY = rect.top + rect.height / 2;
+    
+    const romanceElements = ['🌹', '💕', '💖', '💝', '💕', '🌹', '💖', '💕'];
+    
+    for (let i = 0; i < 18; i++) {
         setTimeout(() => {
             const romance = document.createElement('div');
             romance.innerHTML = romanceElements[Math.floor(Math.random() * romanceElements.length)];
             romance.style.position = 'fixed';
-            romance.style.left = Math.random() * window.innerWidth + 'px';
-            romance.style.top = Math.random() * window.innerHeight + 'px';
-            romance.style.fontSize = '2rem';
+            romance.style.left = startX + 'px';
+            romance.style.top = startY + 'px';
+            romance.style.fontSize = '2.2rem';
             romance.style.pointerEvents = 'none';
             romance.style.zIndex = '1000';
-            romance.style.animation = 'romanceFloat 4s ease-out forwards';
+            romance.style.transform = 'translate(-50%, -50%)';
+            
+            // Random direction and distance
+            const angle = (Math.PI * 2 * i) / 18;
+            const distance = 130 + Math.random() * 150;
+            const endX = startX + Math.cos(angle) * distance;
+            const endY = startY + Math.sin(angle) * distance;
             
             document.body.appendChild(romance);
+            
+            // Animate flying out
+            requestAnimationFrame(() => {
+                romance.style.transition = 'all 2.1s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                romance.style.left = endX + 'px';
+                romance.style.top = endY + 'px';
+                romance.style.opacity = '0';
+                romance.style.transform = 'translate(-50%, -50%) scale(0.25) rotate(180deg)';
+            });
             
             setTimeout(() => {
                 if (document.body.contains(romance)) {
                     document.body.removeChild(romance);
                 }
-            }, 4000);
-        }, i * 150);
+            }, 2100);
+        }, i * 100);
     }
 }
 
