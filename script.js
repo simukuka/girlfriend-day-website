@@ -357,42 +357,42 @@ function playCelebrationSound() {
 // Handle fun card clicks
 function handleFunCardClick(cardType) {
     const messages = {
-        'kissCard': {
+        'kiss': {
             text: "💋 Mwah! A sweet kiss for you! 💋",
             emoji: "💋",
             sound: [523.25, 659.25, 783.99] // C, E, G - sweet kiss melody
         },
-        'hugCard': {
+        'hug': {
             text: "🤗 Sending you the biggest virtual hug! 🤗",
             emoji: "🤗",
             sound: [392.00, 523.25, 659.25] // G, C, E - warm hug melody
         },
-        'danceCard': {
+        'dance': {
             text: "💃 Let's dance together! 💃",
             emoji: "💃",
             sound: [523.25, 659.25, 783.99, 1046.50, 1318.51] // C, E, G, C, E - dance rhythm
         },
-        'magicCard': {
+        'magic': {
             text: "✨ Abracadabra! You're magical! ✨",
             emoji: "✨",
             sound: [523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98] // C, E, G, C, E, G - magical arpeggio
         },
-        'tickleCard': {
+        'tickle': {
             text: "😂 Tickle tickle! You're so cute when you laugh! 😂",
             emoji: "😂",
             sound: [440.00, 554.37, 659.25, 783.99] // A, C#, E, G - playful tickle melody
         },
-        'complimentCard': {
+        'compliment': {
             text: getRandomCompliment(),
             emoji: "🌟",
             sound: [523.25, 659.25, 783.99, 1046.50] // C, E, G, C - compliment chord
         },
-        'flirtCard': {
+        'flirty': {
             text: getRandomFlirtyMessage(),
             emoji: "😘",
             sound: [659.25, 783.99, 1046.50, 1318.51] // E, G, C, E - flirty melody
         },
-        'romanceCard': {
+        'romantic': {
             text: getRandomRomanticMessage(),
             emoji: "🌹",
             sound: [523.25, 659.25, 783.99, 1046.50, 1318.51] // C, E, G, C, E - romantic arpeggio
@@ -568,14 +568,14 @@ function playFunSound(frequencies) {
 // Create special effects
 function createSpecialEffect(cardType) {
     const effects = {
-        'kissCard': () => createKissEffect(),
-        'hugCard': () => createHugEffect(),
-        'danceCard': () => createDanceEffect(),
-        'magicCard': () => createMagicEffect(),
-        'tickleCard': () => createTickleEffect(),
-        'complimentCard': () => createComplimentEffect(),
-        'flirtCard': () => createFlirtEffect(),
-        'romanceCard': () => createRomanceEffect()
+        'kiss': () => createKissEffect(),
+        'hug': () => createHugEffect(),
+        'dance': () => createDanceEffect(),
+        'magic': () => createMagicEffect(),
+        'tickle': () => createTickleEffect(),
+        'compliment': () => createComplimentEffect(),
+        'flirty': () => createFlirtEffect(),
+        'romantic': () => createRomanceEffect()
     };
     
     if (effects[cardType]) {
