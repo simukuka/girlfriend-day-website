@@ -1588,6 +1588,15 @@ function startFindHeartGame() {
 
 // Initialize countdown timer
 function initializeCountdown() {
+    // Guard: if countdown elements don't exist, skip initializing to avoid runtime errors
+    const daysEl = document.getElementById('daysCount');
+    const hoursEl = document.getElementById('hoursCount');
+    const minutesEl = document.getElementById('minutesCount');
+    const secondsEl = document.getElementById('secondsCount');
+    if (!daysEl || !hoursEl || !minutesEl || !secondsEl) {
+        return;
+    }
+
     // Set your love start date (you can change this to your actual date)
     const loveStartDate = new Date('2024-01-01T00:00:00'); // Change this to your actual date
     
@@ -1600,10 +1609,10 @@ function initializeCountdown() {
         const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
         
-        document.getElementById('daysCount').textContent = days;
-        document.getElementById('hoursCount').textContent = hours;
-        document.getElementById('minutesCount').textContent = minutes;
-        document.getElementById('secondsCount').textContent = seconds;
+        daysEl.textContent = days;
+        hoursEl.textContent = hours;
+        minutesEl.textContent = minutes;
+        secondsEl.textContent = seconds;
     }
     
     // Update countdown every second
@@ -2124,21 +2133,8 @@ function addGameCardInteractions() {
     const gameCards = document.querySelectorAll('.game-card');
     gameCards.forEach(card => {
         card.addEventListener('click', function() {
-            const gameId = this.id;
-            let gameType = '';
-            
-            // Map IDs to game types
-            switch(gameId) {
-                case 'memoryGame': gameType = 'memory'; break;
-                case 'loveQuiz': gameType = 'quiz'; break;
-                case 'loveStory': gameType = 'story'; break;
-                case 'loveRoulette': gameType = 'roulette'; break;
-                case 'loveFortune': gameType = 'fortune'; break;
-                case 'loveJokes': gameType = 'jokes'; break;
-                default: gameType = 'memory';
-            }
-            
-            handleGameCardClick(gameType);
+            // Pass the actual element ID so it matches the keys in handleGameCardClick
+            handleGameCardClick(this.id);
         });
     });
 } 
